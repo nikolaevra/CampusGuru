@@ -1,0 +1,16 @@
+{
+  "name": "first-bot",
+  "version": "1.0.0",
+  "description": "learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "nikolaevra@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "botbuilder": "^3.8.4",
+    "restify": "^4.3.0",
+    "uwapi": "^1.1.1"
+  }
+}
