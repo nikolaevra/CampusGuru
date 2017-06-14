@@ -3,8 +3,10 @@
  */
 var restify = require('restify');
 var builder = require('botbuilder');
+var speak = require("speakeasy-nlp");
+var request = require("request");
 var apiToken = '73829fb22d0ae72203f15fbbbd2d5034';
-var uwapi = require('uwapi')(apiToken);
+var uwapi = require('./api-handler/uwapi')(apiToken);
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -22,14 +24,15 @@ var connector = new builder.ChatConnector({
 server.post('/api/messages', connector.listen());
 
 var bot = new builder.UniversalBot(connector, function(session){
-    var query = session.message.text;
-    var qArray = query.split(" ");
+    var string = session.message.text;
+    var parsedQ = speak.classify(string);
 
-    if (qArray.indexOf("Where") > -1) {
-        uwapi.buildingsList().then(function(buildings) {
-            session.send(buildings);
-        });
-    } else {
-        //Not in the array
-    }
+    console.log(parsedQ);
+
+    uwapi.buildings({'building_code': parsedQ.subject}, {}).then(function(data) {
+        session.send(data.building_id);
+    }, function () {
+        session.send("Couldn't find anything");
+    });
+
 });
