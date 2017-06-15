@@ -1,0 +1,89 @@
+{
+  "categories": [
+    {
+      "category": "food",
+      "msg": "Here is a list of things you can search about food on campus:",
+      "children": [
+        {
+          "category": "menu",
+          "msg": "Here is a campus menu",
+          "path": "/foodservices/menu"
+        },
+        {
+          "category": "locations",
+          "msg": "Here is a list of places where you can get some food",
+          "path": "/foodservices/locations"
+        },
+        {
+          "category": "watcard",
+          "msg": "Here is a list of places where you can use your watcard",
+          "path": "/foodservices/watcard"
+        }
+      ]
+    },
+    {
+      "category": "feds",
+      "msg": "Here is what you can know about feds:",
+      "children": [
+        {
+          "category": "events",
+          "msg": "Here is a list of events hosted by feds",
+          "path": "/feds/events"
+        },
+        {
+          "category": "locations",
+          "msg": "Here is a list of feds offices",
+          "path": "/feds/locations"
+        }
+      ]
+    },
+    {
+      "category": "courses",
+      "msg": "Here is something you can ask about the courses:",
+      "children": [
+        {
+          "category": "list all",
+          "msg": "Here is a list of courses",
+          "path": "/courses"
+        }
+      ]
+    },
+    {
+      "category": "news",
+      "msg": "Here are some recent news:",
+      "path": "/news"
+    },
+    {
+      "category": "opportunities",
+      "msg": "Here are some of the opportunities on campus:",
+      "path": "/opportunities"
+    },
+    {
+      "category": "weather",
+      "msg": "This is the weather from the campus weather station:",
+      "path": "/weather/current"
+    },
+    {
+      "category": "buildings",
+      "msg": "Here are some of the things you can search about the buildings:",
+      "children": [
+        {
+          "category": "search",
+          "msg": "IS this what you were looking for?",
+          "path": "/buildings/{building_code}"
+        }
+      ]
+    },
+    {
+      "category": "points of interest",
+      "msg": "Here are some of the things you can search on campus:",
+      "children": [
+        {
+          "category": "atms",
+          "msg": "Atms:",
+          "path": "/poi/atms"
+        }
+      ]
+    }
+  ]
+}

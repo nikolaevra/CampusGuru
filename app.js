@@ -4,9 +4,11 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 var speak = require("speakeasy-nlp");
-var request = require("request");
 var apiToken = '73829fb22d0ae72203f15fbbbd2d5034';
 var uwapi = require('./api-handler/uwapi')(apiToken);
+const commMap = require('./bot_structure.json');
+var has = require('lodash.has');
+var util = require('util');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -23,16 +25,21 @@ var connector = new builder.ChatConnector({
 // Listen for messages from users
 server.post('/api/messages', connector.listen());
 
+// set pointer
+var p = commMap;
+
 var bot = new builder.UniversalBot(connector, function(session){
-    var string = session.message.text;
-    var parsedQ = speak.classify(string);
+    var msg = session.message.text;
 
-    console.log(parsedQ);
-
-    uwapi.buildings({'building_code': parsedQ.subject}, {}).then(function(data) {
-        session.send(data.building_id);
-    }, function () {
-        session.send("Couldn't find anything");
-    });
-
+    session.send(makeQueryList(p.msg, p.children));
 });
+
+function makeQueryList(string, list) {
+    var catArr = [];
+
+    for (var i = 0; i < list.length; i++) {
+        catArr.push(list[i].category);
+    }
+
+    return util.format('%s %s', string, catArr.join(', '));
+}

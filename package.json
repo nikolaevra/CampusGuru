@@ -11,9 +11,10 @@
   "dependencies": {
     "botbuilder": "^3.8.4",
     "http": "0.0.0",
+    "lodash.has": "^4.5.2",
+    "q": "latest",
     "request": "^2.81.0",
     "restify": "^4.3.0",
-    "speakeasy-nlp": "^0.2.12",
-    "q": "latest"
+    "speakeasy-nlp": "^0.2.12"
   }
 }
