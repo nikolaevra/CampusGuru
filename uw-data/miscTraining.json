@@ -1,0 +1,14 @@
+{
+  "atms": [
+    {"in": "atm atms bank machine"},
+    {"out": "atm"}
+  ],
+  "course": [
+    {"in": "course courses classes"},
+    {"out": "course"}
+  ],
+  "food": [
+    {"in": "eat food foods meal"},
+    {"out": "food"}
+  ]
+}
