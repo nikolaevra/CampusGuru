@@ -3,11 +3,9 @@
  */
 var restify = require('restify');
 var builder = require('botbuilder');
-var speak = require("speakeasy-nlp");
+var luis = require("./training/luis.js");
 var apiToken = '73829fb22d0ae72203f15fbbbd2d5034';
 var uwapi = require('./api-handler/uwapi')(apiToken);
-const commMap = require('./bot_structure.json');
-var has = require('lodash.has');
 var util = require('util');
 
 // Setup Restify Server
@@ -25,13 +23,11 @@ var connector = new builder.ChatConnector({
 // Listen for messages from users
 server.post('/api/messages', connector.listen());
 
-// set pointer
-var p = commMap;
 
 var bot = new builder.UniversalBot(connector, function(session){
     var msg = session.message.text;
 
-    session.send(makeQueryList(p.msg, p.children));
+    session.send(luis.understand(msg));
 });
 
 function makeQueryList(string, list) {

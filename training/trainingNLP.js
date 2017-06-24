@@ -3,19 +3,26 @@
  */
 
 var natural = require("natural");
-var tSet = require('./UWDefinitions.json').data;
+var tSet = require('../uw-data/UWDefinitions.json');
+
+var idData = tSet.idData;
 
 classifier = new natural.BayesClassifier();
 
-for (var i = 0; i < tSet.length; i++) {
-    classifier.addDocument(tSet[i].unit_full_name.toString(), tSet[i].unit_code.toString());
+// associate all of the buildings names with building keyword
+for (var i = 0; i < idData.length; i++) {
+    classifier.addDocument(idData[i].unit_full_name.toString() + " " +  idData[i].unit_code.toString(),
+    "buildings");
 }
+
+// associate all building names with their codes
+for (var k = 0; i < idData.length; k++) {
+    classifier.addDocument(idData[k].unit_full_name.toString(), idData[k].unit_code.toString());
+}
+
 classifier.train();
 
-console.log(classifier.classify('Math'));
-
-/*
 classifier.save('classifier.json', function(err, classifier) {
     // the classifier is saved to the classifier.json file!
 });
-*/
+

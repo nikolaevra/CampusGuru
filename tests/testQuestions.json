@@ -18,5 +18,25 @@
     "What are some opportunities on campus?",
     "Campus news",
     "Whats the weather?"
+  ],
+  "results": [
+    "weather",
+    "weather",
+    "food menu",
+    "food locations",
+    "atm",
+    "atm",
+    "food watcard",
+    "feds events",
+    "feds events",
+    "feds locations",
+    "building search",
+    "buildings search",
+    "buildings search",
+    "courses",
+    "news",
+    "opportunities",
+    "news",
+    "weather"
   ]
 }
