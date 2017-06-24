@@ -33,6 +33,7 @@ var bot = new builder.UniversalBot(connector, function(session){
         if (!result) {
             session.send("Could not find anything");
         } else {
+            console.log(result);
             session.send(result);
         }
     });
@@ -74,8 +75,9 @@ function understand (question, callback) {
             } else if (parsed.tokens.indexOf('news') >= 0) {
                 callback('news');
             } else {
-                if (helpers.searchUW(parsed.subject, classified) !== null) {
-                    callback('building');
+                var srch = helpers.searchUW(parsed.subject, classified);
+                if (srch  !== null) {
+                    callback(srch);
                 } else {
                     callback(false);
                 }

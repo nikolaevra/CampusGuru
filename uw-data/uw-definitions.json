@@ -420,5 +420,19 @@
       "unit_short_name":"Women's Studies",
       "unit_full_name":"Women's Studies"
     }
-  ]
+  ],
+  "misc": {
+    "atm": [
+      "atm atms bank machine",
+      "atm"
+    ],
+    "course": [
+      "course courses classes",
+      "course"
+    ],
+    "food": [
+      "eat food foods meal",
+      "food"
+    ]
+  }
 }

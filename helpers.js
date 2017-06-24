@@ -1,13 +1,14 @@
 /**
  * Created by Ruslan on 6/24/2017.
  */
-var tSet = require('./uw-data/UWDefinitions.json');
-var idData = tSet.idData;
+var tSet = require('./uw-data/uw-buildings.json');
+var bData = tSet.data;
 
 exports.searchUW = function (needle, classified) {
-    for (var i = 0; i < idData.length; i++) {
-        if (idData[i].unit_code === needle || idData[i].unit_code === classified) {
-            return ("building");
+    for (var i = 0; i < bData.length; i++) {
+        if (bData[i].building_code === needle || bData[i].building_code === classified) {
+            var result = "building" + " " + classified;
+            return (result);
         }
     }
 
