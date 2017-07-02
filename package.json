@@ -13,6 +13,7 @@
     "corenlp-request-wrapper": "^1.0.3",
     "http": "0.0.0",
     "lodash.has": "^4.5.2",
+    "microsoft-adaptivecards": "^0.6.0",
     "natural": "^0.5.1",
     "q": "latest",
     "request": "^2.81.0",

@@ -7,8 +7,9 @@ var speak = require("speakeasy-nlp");
 var natural = require("natural");
 var helpers = require('./helpers.js');
 var apiToken = '73829fb22d0ae72203f15fbbbd2d5034';
-var uwapi = require('./api-handler/uwapi')(apiToken);
+var urls = require('./api-handler/api-urls');
 var util = require('util');
+var request = require('request');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -34,19 +35,37 @@ var bot = new builder.UniversalBot(connector, function(session){
             session.send("Could not find anything");
         } else {
             console.log(result);
-            session.send(result);
+            session.send({
+                "type": "AdaptiveCard",
+                "version": "0.5",
+                "body": [
+                    {
+                        "type": "Container",
+                        "items": [
+                            {
+                                "type": "TextBlock",
+                                "text": "Meow!"
+                            },
+                            {
+                                "type": "Image",
+                                "url": "http://adaptivecards.io/api/cat"
+                            }
+                        ]
+                    }
+                ]
+            });
         }
     });
 });
 
-function makeQueryList(string, list) {
-    var catArr = [];
-
-    for (var i = 0; i < list.length; i++) {
-        catArr.push(list[i].category);
-    }
-
-    return util.format('%s %s', string, catArr.join(', '));
+function makeRequest(url, callback) {
+    request(url, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            callback(JSON.parse(body).data);
+        } else {
+            callback(false);
+        }
+    })
 }
 
 function understand (question, callback) {
@@ -61,27 +80,52 @@ function understand (question, callback) {
             console.log(classified);
 
             if (parsed.tokens.indexOf('weather') >= 0) {
-                callback('weather');
+                console.log('weather');
+                makeRequest(addURLParams(urls.weather), function (result) {
+                    callback(result);
+                });
             } else if (parsed.tokens.indexOf('food') >= 0 || classified === 'food') {
                 if (parsed.tokens.indexOf('watcard') >= 0) {
-                    callback('food watcard');
+                    makeRequest(addURLParams(urls.watcard), function (result) {
+                        callback(result);
+                    });
+                    console.log('food watcard');
                 } else if (parsed.action === 'what') {
-                    callback('food menu');
+                    makeRequest(addURLParams(urls.menu), function (result) {
+                        callback(result);
+                    });
+                    console.log('food menu');
                 } else if (parsed.action === 'where') {
+                    makeRequest(addURLParams(urls.food_locations), function (result) {
+                        callback(result);
+                    });
                     callback('food locations');
                 }
             } else if (parsed.tokens.indexOf('atm') >= 0 || parsed.tokens.indexOf('atms') >= 0) {
-                callback('atm');
+                makeRequest(addURLParams(urls.atm), function (result) {
+                    callback(result);
+                });
+                console.log('atm');
             } else if (parsed.tokens.indexOf('news') >= 0) {
-                callback('news');
+                makeRequest(addURLParams(urls.news), function (result) {
+                    callback(result);
+                });
+                console.log('news');
             } else {
                 var srch = helpers.searchUW(parsed.subject, classified);
                 if (srch  !== null) {
-                    callback(srch);
+                    makeRequest(addURLParams(util.format(urls.find_build, srch)), function (result) {
+                        callback(result);
+                    });
+                    console.log(srch);
                 } else {
                     callback(false);
                 }
             }
         }
     });
+}
+
+function addURLParams (string) {
+    return string + '?key=' + apiToken;
 }
